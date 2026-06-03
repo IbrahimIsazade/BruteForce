@@ -1,4 +1,7 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace BruteForce
 {
@@ -25,8 +28,11 @@ namespace BruteForce
         // Stops the attack immediately. Requirement 6.
         public void StopAttack()
         {
-
-            throw new NotImplementedException("Implement cancellation logic here.");
+            // 1 & 2. Check if _cts is not null and trigger cancellation.
+            if (_cts != null && !_cts.IsCancellationRequested)
+            {
+                _cts.Cancel();
+            }
         }
 
         // Starts the multi-threaded brute force attack.
@@ -37,7 +43,6 @@ namespace BruteForce
             long totalAttempts = 0;
             string foundPassword = null;
 
-            // Get combinations from File 2
             var combinations = _generator.GenerateCombinations(maxLength);
 
             // Requirement 4e: Max of (CPU Cores - 1)
@@ -51,16 +56,37 @@ namespace BruteForce
 
             try
             {
-                // We use Task.Run so we don't block the UI thread while Parallel.ForEach works
+                // I use Task.Run so we don't block the UI thread while Parallel.ForEach works
                 await Task.Run(() =>
                 {
+                    Parallel.ForEach(combinations, parallelOptions, (guess) =>
+                    {
+                        long currentAttemptCount = Interlocked.Increment(ref totalAttempts);
+
+                        if (currentAttemptCount % 100000 == 0)
+                        {
+                            progress?.Report(new BruteForceProgress
+                            {
+                                AttemptsMade = currentAttemptCount,
+                                CurrentGuess = guess,
+                                Elapsed = stopwatch.Elapsed
+                            });
+                        }
+
+                        if (_passwordHandler.ValidateGuess(guess, targetHash))
+                        {
+                            // 4a.
+                            foundPassword = guess;
+
+                            // 4b.
+                            _cts.Cancel();
+                        }
+                    });
 
                 }, _cts.Token);
             }
             catch (OperationCanceledException)
             {
-                // This exception is expected when we call _cts.Cancel().
-                // It means the threads stopped successfully.
             }
 
             stopwatch.Stop();
