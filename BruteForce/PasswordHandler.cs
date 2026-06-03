@@ -34,12 +34,9 @@ namespace BruteForce
         // Validates if a brute-force guess matches the target hash.
         public bool ValidateGuess(string guess, string targetHash)
         {
-            // TODO:
-            // 1. Pass the 'guess' into your ComputeHash method above.
-            // 2. Compare the result with the 'targetHash'.
-            // 3. Return true if they match, false otherwise.
+            string guessHash = ComputeHash(guess);
 
-            throw new NotImplementedException("Implement the validation logic here.");
+            return string.Equals(guessHash, targetHash, StringComparison.OrdinalIgnoreCase);
         }
 
         // Generates a random target password between 4 (inclusive) and 6 (exclusive) characters.
