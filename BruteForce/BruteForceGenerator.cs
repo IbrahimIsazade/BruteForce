@@ -6,8 +6,6 @@ namespace BruteForce
     public class BruteForceGenerator
     {
         // Define the characters your brute force attack will use. 
-        // For testing, keeping this small (e.g., just "abcdefghijklmnopqrstuvwxyz") 
-        // will make the 6-character brute force finish in a reasonable amount of time.
         private readonly string _characterSet;
 
         public BruteForceGenerator(string characterSet = "abcdefghijklmnopqrstuvwxyz")
@@ -15,26 +13,31 @@ namespace BruteForce
             _characterSet = characterSet;
         }
 
-        /// <summary>
-        /// Generates all possible combinations starting from length 1 up to maxLength.
-        /// Requirement 4c: Must begin searching from length 1.
-        /// </summary>
-        public IEnumerable<string> GenerateCombinations(int maxLength)
+        // Generates all possible combinations starting from length 1 up to maxLength.
+        // Requirement 4c
+        public void GenerateCombinations(int maxLength)
         {
-            // TODO:
-            // 1. Create an outer loop that iterates 'currentLength' from 1 up to 'maxLength'.
-            // 2. For each 'currentLength', generate all possible string permutations using _characterSet.
-            // 3. Use 'yield return [generatedString];' to pass each combination back to the caller one by one.
-
-            throw new NotImplementedException("Implement the combination generation logic here.");
+            
         }
 
-        // Optional but recommended: A private helper method
-        // You will likely need a recursive function or a base-N counting loop here 
-        // to actually build the strings of 'currentLength'.
-        private void GenerateRecursive( /* add necessary parameters here */ )
+        private IEnumerable<string> GenerateRecursive(char[] buffer, int currentPosition, int targetLength)
         {
-            // TODO: Implement the underlying math to combine characters.
+            if (currentPosition == targetLength)
+            {
+                yield return new string(buffer);
+                yield break; // Stop this branch of recursion
+            }
+
+            for (int i = 0; i < _characterSet.Length; i++)
+            {
+                buffer[currentPosition] = _characterSet[i];
+
+                foreach (string combination in GenerateRecursive(buffer, currentPosition + 1, targetLength))
+                {
+                    yield return combination; // Bubble the generated string up to the caller
+                }
+            }
         }
+    }
     }
 }
