@@ -15,9 +15,19 @@ namespace BruteForce
 
         // Generates all possible combinations starting from length 1 up to maxLength.
         // Requirement 4c
-        public void GenerateCombinations(int maxLength)
+        public IEnumerable<string> GenerateCombinations(int maxLength)
         {
-            
+            for (int currentLength = 1; currentLength <= maxLength; currentLength++)
+            {
+                // Create a reusable character buffer for the current length
+                char[] buffer = new char[currentLength];
+
+                // 2 & 3. Generate permutations and yield them back one by one.
+                foreach (string combination in GenerateRecursive(buffer, 0, currentLength))
+                {
+                    yield return combination;
+                }
+            }
         }
 
         private IEnumerable<string> GenerateRecursive(char[] buffer, int currentPosition, int targetLength)
