@@ -9,16 +9,26 @@ namespace BruteForce
         // Requirement 4a: Constant static salt defined in the application
         private const string StaticSalt = "IbrahimSalting_2008!";
 
-        // Combines the raw password with the static salt and returns the SHA256 hash as a hex string
+        // Raw password + static salt, then returns the SHA256 hash as hex string
         public string ComputeHash(string rawPassword)
         {
-            // TODO: 
-            // 1. Concatenate rawPassword + StaticSalt
-            // 2. Convert to byte array using Encoding.UTF8.GetBytes()
-            // 3. Use SHA256.Create().ComputeHash()
-            // 4. Convert the resulting byte array into a hexadecimal string and return it.
+            string saltedPassword = rawPassword + StaticSalt;
+            byte[] passwordBytes = Encoding.UTF8.GetBytes(saltedPassword);
 
-            throw new NotImplementedException("Implement the hashing logic here.");
+            using (SHA256 sha256 = SHA256.Create())
+            {
+                byte[] hashBytes = sha256.ComputeHash(passwordBytes);
+
+                // Convert the resulting byte array into a hexadecimal string
+                StringBuilder builder = new StringBuilder();
+
+                for (int i = 0; i < hashBytes.Length; i++)
+                {
+                    builder.Append(hashBytes[i].ToString("x2")); // "x2" formats to lowercase hex
+                }
+
+                return builder.ToString();
+            }
         }
 
         // Validates if a brute-force guess matches the target hash.
