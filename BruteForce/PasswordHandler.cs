@@ -47,7 +47,7 @@ namespace BruteForce
 
             int length = random.Next(4, 6);
 
-            const string chars = "abcdefghijklmnopqrstuvwxyz";
+            const string chars = "abcdefghijklmnopqrstuvwxyz1234567890";
             StringBuilder passwordBuilder = new StringBuilder();
 
             for (int i = 0; i < length; i++)
