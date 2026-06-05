@@ -8,7 +8,7 @@ namespace BruteForce
         // Define the characters your brute force attack will use. 
         private readonly string _characterSet;
 
-        public BruteForceGenerator(string characterSet = "abcdefghijklmnopqrstuvwxyz")
+        public BruteForceGenerator(string characterSet = "abcdefghijklmnopqrstuvwxyz1234567890")
         {
             _characterSet = characterSet;
         }
