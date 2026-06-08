@@ -28,7 +28,7 @@ namespace BruteForce
         // Stops the attack immediately. Requirement 6.
         public void StopAttack()
         {
-            // 1 & 2. Check if _cts is not null and trigger cancellation.
+            // Check if _cts is not null and trigger cancellation.
             if (_cts != null && !_cts.IsCancellationRequested)
             {
                 _cts.Cancel();
@@ -56,7 +56,7 @@ namespace BruteForce
 
             try
             {
-                // I use Task.Run so we don't block the UI thread while Parallel.ForEach works
+                // I use Task.Run so I don't block the UI thread while Parallel.ForEach works
                 await Task.Run(() =>
                 {
                     Parallel.ForEach(combinations, parallelOptions, (guess) =>

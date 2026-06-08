@@ -49,20 +49,19 @@ namespace BruteForce
         private void InitializeCodeFirstUI()
         {
             this.Text = "Multi-Threaded Brute Force Attacker";
-            // Increased height from 420 to 460 to make room for the new button
             this.Size = new Size(420, 460);
             this.StartPosition = FormStartPosition.CenterScreen;
             this.FormBorderStyle = FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
 
-            // --- Top Section: Inputs ---
+            // Top Section: Inputs
             lblInputPrompt = new Label { Text = "Target Password:", Location = new Point(20, 23), Size = new Size(100, 20) };
             txtCustomPassword = new TextBox { Location = new Point(120, 20), Size = new Size(150, 25) };
             btnGenerateRandom = new Button { Text = "Random", Location = new Point(280, 19), Size = new Size(100, 25) };
 
             chkMultiThread = new CheckBox { Text = "Enable Multi-Threading (Uses all CPU Cores)", Location = new Point(120, 50), Size = new Size(260, 20), Checked = true };
 
-            // --- Middle Section: Actions ---
+            // Middle Section: Actions
             btnStart = new Button
             {
                 Text = "START ATTACK",
@@ -75,7 +74,7 @@ namespace BruteForce
             btnStart.FlatAppearance.BorderSize = 0;
             btnStop = new Button { Text = "EMERGENCY STOP", Location = new Point(210, 90), Size = new Size(170, 45), BackColor = Color.White, Font = new Font("Arial", 9, FontStyle.Bold), Enabled = false };
 
-            // --- Bottom Section: Results & Progress ---
+            // Bottom Section: Results & Progress
             lblTargetHash = new Label { Text = "Target Hash: ---", Location = new Point(20, 160), Size = new Size(360, 20) };
             lblCurrentGuess = new Label { Text = "Current Guess: ---", Location = new Point(20, 190), Size = new Size(360, 20) };
             lblAttempts = new Label { Text = "Attempts: 0", Location = new Point(20, 220), Size = new Size(360, 20) };
@@ -83,7 +82,7 @@ namespace BruteForce
 
             lblResult = new Label { Text = "Status: Waiting for input...", Location = new Point(20, 300), Size = new Size(360, 60), Font = new Font("Arial", 11, FontStyle.Bold), ForeColor = Color.DarkBlue };
 
-            // --- NEW: Log Viewer Button ---
+            // Log Viewer Button
             btnViewLogs = new Button { Text = "VIEW LOGS", Location = new Point(120, 370), Size = new Size(160, 35), BackColor = Color.LightGray, Font = new Font("Arial", 9, FontStyle.Bold) };
 
             // Hook up click events

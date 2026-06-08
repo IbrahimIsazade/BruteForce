@@ -10,7 +10,7 @@ namespace BruteForce
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MainForm()); // Launches your UI
+            Application.Run(new MainForm()); // Launches UI
         }
     }
 }

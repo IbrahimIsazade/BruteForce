@@ -22,7 +22,7 @@ namespace BruteForce
                 // Create a reusable character buffer for the current length
                 char[] buffer = new char[currentLength];
 
-                // 2 & 3. Generate permutations and yield them back one by one.
+                // Generate permutations and yield them back one by one.
                 foreach (string combination in GenerateRecursive(buffer, 0, currentLength))
                 {
                     yield return combination;
